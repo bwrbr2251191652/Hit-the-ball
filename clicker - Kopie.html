@@ -1,0 +1,155 @@
+<html>
+<head>
+    <title>clicker</title>
+    <style>
+        body{
+            background-image: url(hinter.jpg);
+            background-size: cover;
+            height: 100vh;
+            margin: 0px;
+        }
+        #top{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        #score{
+            font-family: arial;
+            text-align: left;
+            margin: 24px;
+            padding: 8px;
+            border-radius: 8px;
+            color: #ffd700;
+            background-color: rgba(0, 0, 0, 0.5);
+            -webkit-text-stroke: 1px #bca000;
+        }
+        #lvl{
+            font-family: arial;
+            text-align: center;
+            margin: 24px;
+            padding: 8px;
+            border-radius: 8px;
+            color: #00ff00;
+            background-color: rgba(0, 0, 0, 0.5);
+            -webkit-text-stroke: 1px #00bc00;
+        }
+        #attempts{
+            font-family: arial;
+            text-align: right;
+            margin: 24px;
+            padding: 8px;
+            border-radius: 8px;
+            color: #ff0000;
+            background-color: rgba(0, 0, 0, 0.5);
+            -webkit-text-stroke: 1px #bc0000;
+        }
+       
+        #btn-container{
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #start{
+            font-weight: bold;
+            font-family: monospace;
+            width: 64px;
+            height: 64px;
+            text-align: center;
+            background-color: #ffd700;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 5px 5px 5px lightgrey;
+        }
+    </style>
+</head>
+<body >
+    <div id="top">
+        <h1 id="score">0</h1>
+        <h1 id="attempts">5</h1>
+        <h1 id="lvl">Level 1</h1>
+    </div>
+    <img id="ball" onclick="hit()" src="ball.gif" alt="ball">
+    <div id="btn-container"><button id="start" onclick="start()">START</button></div>
+    <script>
+        var score = 0;
+        var attempts = 3;
+        var timer;
+        document.getElementById('ball').hidden = true;
+
+        function start(){
+            attempts = 5;
+            document.getElementById('attempts').innerHTML = attempts;
+            score = 0;
+            document.getElementById('score').innerHTML = score;
+            document.getElementById('start').hidden = true;
+            document.getElementById('lvl').innerHTML = "Level 1";
+            timer = setInterval(function(){move()},1500)
+
+        }
+        
+        function move(){
+            document.getElementById('ball');
+            const ball = document.getElementById('ball');
+            randsize = Math.random() * 100;
+            ball.style.width = randsize;
+            randleft = Math.random() * innerWidth -100;
+            randtop = Math.random() * innerHeight -100;
+
+            document.getElementById('ball').hidden = false;
+
+            ball.style.position = 'absolute';
+            ball.style.left = randleft;
+            ball.style.top = randtop;
+            document.getElementById('attempts').innerHTML = attempts;
+
+            if(attempts==0){
+                stop();
+            }
+            attempts--;
+            if(score==5){
+                clearInterval(timer);
+                document.getElementById('lvl').innerHTML = "Level 2";
+                timer = setInterval(function(){move()},1200)
+            }
+            if(score==10){
+                clearInterval(timer);
+                document.getElementById('lvl').innerHTML = "Level 3";
+                timer = setInterval(function(){move()},1000)
+            }
+            if(score==15){
+                clearInterval(timer);
+                document.getElementById('lvl').innerHTML = "Level 4";
+                timer = setInterval(function(){move()},900)
+            }
+            if(score==20){
+                clearInterval(timer);
+                document.getElementById('lvl').innerHTML = "Level 5";
+                timer = setInterval(function(){move()},700)
+            }
+            if(score==25){
+                clearInterval(timer);
+                document.getElementById('lvl').innerHTML = "Level 6 (Max.)";
+                timer = setInterval(function(){move()},500)
+            }
+        }
+
+        function hit(){
+            score++;
+            attempts++;
+            document.getElementById('score').innerHTML = score;
+            document.getElementById('ball').hidden = true;
+
+        }
+
+
+
+        function stop(){
+            clearInterval(timer);
+            document.getElementById('start').hidden = false;
+            document.getElementById('ball').hidden = true;
+        }
+    </script>
+</body>
+</html>
